@@ -1,14 +1,10 @@
-module Pages.Home_ exposing (Model, Msg(..), page)
+module Pages.NotFound_ exposing (Model, Msg, page)
 
-import Bridge
-import Effect exposing (..)
-import Element
+import Effect exposing (Effect)
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
-import Lamdera
 import Page exposing (Page)
 import Route exposing (Route)
+import Route.Path
 import Shared
 import View exposing (View)
 
@@ -19,7 +15,7 @@ page shared route =
         { init = init
         , update = update
         , subscriptions = subscriptions
-        , view = view shared
+        , view = view
         }
 
 
@@ -32,7 +28,7 @@ type alias Model =
 
 
 init : () -> ( Model, Effect Msg )
-init _ =
+init () =
     ( {}
     , Effect.none
     )
@@ -43,15 +39,15 @@ init _ =
 
 
 type Msg
-    = SmashedLikeButton
+    = NoOp
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        SmashedLikeButton ->
+        NoOp ->
             ( model
-            , Effect.sendCmd <| Lamdera.sendToBackend Bridge.SmashedLikeButton
+            , Effect.none
             )
 
 
@@ -68,6 +64,6 @@ subscriptions model =
 -- VIEW
 
 
-view : Shared.Model -> Model -> View Msg
-view shared model =
-    View "hi" [] (Element.text "hi")
+view : Model -> View Msg
+view model =
+    View.fromString "Page not found"
